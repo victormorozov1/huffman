@@ -1,6 +1,8 @@
 from huffman_tree import Tree
 
 
+codes = {}
+
 f = open('text.txt')
 num = [0] * 300
 
@@ -13,10 +15,26 @@ while True:
 
 print(num)
 
-trees = []
+trees = []  # Нужно заменить на сет!!!
 
 for i in range(len(num)):
-    trees.append(Tree(num[i], letter=chr(i)))
     if num[i]:
-        print(chr(i))
+        trees.append(Tree(summ=num[i], letter=chr(i)))
+
+trees.sort(key=lambda tree: tree.sum)
+print(trees)
+
+while len(trees) > 1:
+    trees.append(Tree(left=trees[0], right=trees[1]))
+    trees = trees[2::]
+    trees.sort(key=lambda tree: tree.sum)
+
+tree = trees[0]
+print(tree)
+
+tree.count_codes('', codes)
+print(codes)
+
+
+
 
