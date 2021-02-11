@@ -35,6 +35,22 @@ print(tree)
 tree.count_codes('', codes)
 print(codes)
 
+f.close()
+f = open('text.txt', 'r')
+
+res = open('res.txt', 'wb')
+while True:
+    c = f.read(1)
+    if c:
+        for i in codes[c]:
+            if i == '1':
+                res.write(bytes(1))
+            else:
+                res.write(bytes(0))
+
+    else:
+        break
+
 
 
 
