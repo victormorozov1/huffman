@@ -1,60 +1,74 @@
 from huffman_tree import Tree
 
 
-codes = {}
+def count_letters():
+    global num
 
-f = open('text.txt')
-num = [0] * 300
+    f = open('text.txt')
+    num = [0] * 300
 
-while True:
-    c = f.read(1)
-    if c:
-        num[ord(c)] += 1
-    else:
-        break
+    while True:
+        c = f.read(1)
+        if c:
+            num[ord(c)] += 1
+        else:
+            break
 
-print(num)
+    f.close()
 
-trees = []  # Нужно заменить на сет!!!
+    print(num)
 
-for i in range(len(num)):
-    if num[i]:
-        trees.append(Tree(summ=num[i], letter=chr(i)))
 
-trees.sort(key=lambda tree: tree.sum)
-print(trees)
+def make_tree():
+    global codes, tree
+    codes = {}
+    trees = []  # Нужно заменить на сет!!!
 
-while len(trees) > 1:
-    trees.append(Tree(left=trees[0], right=trees[1]))
-    trees = trees[2::]
+    for i in range(len(num)):
+        if num[i]:
+            trees.append(Tree(summ=num[i], letter=chr(i)))
+
     trees.sort(key=lambda tree: tree.sum)
+    print(trees)
 
-tree = trees[0]
-print(tree)
+    while len(trees) > 1:
+        trees.append(Tree(left=trees[0], right=trees[1]))
+        trees = trees[2::]
+        trees.sort(key=lambda tree: tree.sum)
 
-tree.count_codes('', codes)
-print(codes)
+    tree = trees[0]
+    print(tree)
 
-f.close()
-f = open('text.txt', 'r')
+    tree.count_codes('', codes)
+    print(codes)
 
-res = open('res.txt', 'wb')
 
-bitstring = ''
+def write_bits():
+    f = open('text.txt', 'r')
+    res = open('res.txt', 'wb')
 
-while True:
-    c = f.read(1)
-    if c:
-        bitstring += codes[c]
-    else:
-        break
+    bitstring = ''
 
-print('all code: ', bitstring)
+    while True:
+        c = f.read(1)
+        if c:
+            bitstring += codes[c]
+        else:
+            break
 
-n = int(bitstring, 2)
-bytess = n.to_bytes((n.bit_length() + 7) // 8, 'big')
-print(bytess)
+    print('all code: ', bitstring)
 
-res.write(bytess)
+    n = int(bitstring, 2)
+    bytess = n.to_bytes((n.bit_length() + 7) // 8, 'big')
+    print(bytess)
+
+    res.write(bytess)
+
+
+if __name__ == '__main__':
+    count_letters()
+    make_tree()
+    write_bits()
+
 
 
