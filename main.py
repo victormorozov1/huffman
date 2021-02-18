@@ -39,18 +39,22 @@ f.close()
 f = open('text.txt', 'r')
 
 res = open('res.txt', 'wb')
+
+bitstring = ''
+
 while True:
     c = f.read(1)
     if c:
-        for i in codes[c]:
-            if i == '1':
-                res.write(bytes(1))
-            else:
-                res.write(bytes(0))
-
+        bitstring += codes[c]
     else:
         break
 
+print('all code: ', bitstring)
 
+n = int(bitstring, 2)
+bytess = n.to_bytes((n.bit_length() + 7) // 8, 'big')
+print(bytess)
+
+res.write(bytess)
 
 
