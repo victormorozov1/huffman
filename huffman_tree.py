@@ -1,9 +1,20 @@
+def tree_from_str(s):
+    if s[0] != '-':
+        return Tree(letter=s.pop(0))
+
+    s.pop(0)
+    return Tree(left=tree_from_str(s), right=tree_from_str(s))
+
+
 class Tree:
     def __init__(self, summ=None, left=None, right=None, letter=None):
         self.left, self.right = left, right
         self.letter = letter
         if summ is None:
-            self.sum = left.sum + right.sum
+            if self.left and self.right:
+                self.sum = left.sum + right.sum
+            else:
+                self.sum = 0
         else:
             self.sum = summ
 
@@ -29,3 +40,8 @@ class Tree:
 
     def __repr__(self):
         return f'<{self}>'
+
+
+if __name__ == '__main__':
+    s = ['-', 'a', '-', 'b', 'c']
+    print(tree_from_str(s).right.right)
