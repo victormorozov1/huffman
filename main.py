@@ -103,7 +103,7 @@ if __name__ == '__main__':
     count_letters()
     make_tree()
     write_tree()
-    # write_bits()
+    write_bits()
 
 
 
