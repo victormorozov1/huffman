@@ -35,6 +35,12 @@ class Tree:
         if self.right:
             self.right.count_codes(code + '1', codes)
 
+    def get_string(self):
+        if self.letter:
+            return self.letter
+
+        return '-' + self.left.get_string() + self.right.get_string()
+
     def __str__(self):
         return f'Tree: sum={self.sum}, letter={self.letter}'
 
@@ -44,4 +50,5 @@ class Tree:
 
 if __name__ == '__main__':
     s = ['-', 'a', '-', 'b', 'c']
-    print(tree_from_str(s).right.right)
+    t = tree_from_str(s)
+    print(t.get_string())

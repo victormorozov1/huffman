@@ -47,22 +47,7 @@ def make_tree():
 def write_tree():
     res = open('res.txt', 'a')
 
-    trees = [tree]
-
-    while trees:
-        if trees[0].letter:
-            res.write(trees[0].letter)
-        else:
-            res.write('-')
-
-        if trees[0].left:
-            trees.append(trees[0].left)
-        if trees[0].right:
-            trees.append(trees[0].right)
-
-        trees = trees[1::]
-
-    res.write(SEPARATOR)
+    res.write(tree.get_string() + SEPARATOR)
 
 
 def write_bits():
