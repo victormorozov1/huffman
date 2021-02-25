@@ -6,7 +6,7 @@ def count_letters():
     global num
 
     f = open('text.txt')
-    num = [0] * 300
+    num = [0] * 30000
 
     while True:
         c = f.read(1)

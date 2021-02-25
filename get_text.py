@@ -1,4 +1,5 @@
 from separator import SEPARATOR
+from huffman_tree import *
 
 
 # f = open('res.txt', 'rb')
@@ -21,3 +22,12 @@ else:
 
 print(binary_string)
 print('len =', len(binary_string))
+
+
+tree = tree_from_str(list(tree))
+print(tree.get_string())
+
+print('RESULT TEXT:')
+while binary_string:
+    letter, binary_string = tree.get_letter(binary_string)
+    print(letter, end='')

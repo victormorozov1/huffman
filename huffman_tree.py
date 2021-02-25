@@ -20,8 +20,8 @@ class Tree:
 
     def get_letter(self, code):
         if self.letter:
-            return self.letter
-        if code[0] == 0:
+            return self.letter, code
+        if code[0] == '0':
             return self.left.get_letter(code[1::])
         return self.right.get_letter(code[1::])
 
@@ -52,3 +52,10 @@ if __name__ == '__main__':
     s = ['-', 'a', '-', 'b', 'c']
     t = tree_from_str(s)
     print(t.get_string())
+    print(t.left.get_letter('1011'))
+    print(t.get_letter('01011'))
+
+    code = '01011'
+    while code:
+        letter, code = t.get_letter(code)
+        print(letter, code)
