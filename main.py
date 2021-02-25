@@ -1,4 +1,5 @@
 from huffman_tree import Tree
+from separator import SEPARATOR
 
 
 def count_letters():
@@ -61,10 +62,11 @@ def write_tree():
 
         trees = trees[1::]
 
+    res.write(SEPARATOR)
+
 
 def write_bits():
     f = open('text.txt', 'r')
-    res = open('res.txt', 'ab')
 
     bitstring = ''
 
@@ -76,12 +78,21 @@ def write_bits():
             break
 
     print('all code: ', bitstring)
+    print('len =', len(bitstring))
+
+    res = open('res.txt', 'a')
+    res.write(f'{len(bitstring)}{SEPARATOR}')
+    res.close()
+
+    res = open('res.txt', 'ab')
 
     n = int(bitstring, 2)
     bytess = n.to_bytes((n.bit_length() + 7) // 8, 'big')
     print(bytess)
 
     res.write(bytess)
+
+    res.close()
 
 
 if __name__ == '__main__':
@@ -91,8 +102,8 @@ if __name__ == '__main__':
 
     count_letters()
     make_tree()
-    # write_tree()
-    write_bits()
+    write_tree()
+    # write_bits()
 
 
 

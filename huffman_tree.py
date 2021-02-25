@@ -15,7 +15,7 @@ class Tree:
         return self.right.get_letter(code[1::])
 
     def count_codes(self, code, codes):
-        if self.letter:
+        if self.letter:  # Не работает если в файле 1 символ!!!
             codes[self.letter] = code
             print(self.letter, code)
 
