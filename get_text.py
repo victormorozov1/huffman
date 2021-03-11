@@ -5,12 +5,16 @@ from huffman_tree import *
 # f = open('res.txt', 'rb')
 # c = f.read()
 
-f = open('res.txt', 'r', encoding='CP866')
-tree, ln, c = f.read().split(SEPARATOR)
+tree = open('tree.txt')
+tree, ln = tree.read().split(SEPARATOR)
+
+bits = open('res.txt', 'rb')
+
+c = bits.read()
 ln = int(ln)
 
 print(ln, tree, c)
-c = c.encode('CP866')
+
 print(c)
 
 binary_string = "{:08b}".format(int(c.hex(), 16))

@@ -44,10 +44,12 @@ def make_tree():
     print(codes)
 
 
-def write_tree():
-    res = open('res.txt', 'a')
+def write_tree(filename='res.txt', separator=SEPARATOR):
+    res = open(filename, 'w')
 
-    res.write(tree.get_string() + SEPARATOR)
+    res.write(tree.get_string() + separator)
+
+    res.close()
 
 
 def write_bits():
@@ -65,11 +67,11 @@ def write_bits():
     print('all code: ', bitstring)
     print('len =', len(bitstring))
 
-    res = open('res.txt', 'a')
-    res.write(f'{len(bitstring)}{SEPARATOR}')
+    res = open('tree.txt', 'a')
+    res.write(f'{SEPARATOR}{len(bitstring)}')
     res.close()
 
-    res = open('res.txt', 'ab')
+    res = open('res.txt', 'wb')
 
     n = int(bitstring, 2)
     bytess = n.to_bytes((n.bit_length() + 7) // 8, 'big')
@@ -87,7 +89,7 @@ if __name__ == '__main__':
 
     count_letters()
     make_tree()
-    write_tree()
+    write_tree(filename='tree.txt', separator='')
     write_bits()
 
 
