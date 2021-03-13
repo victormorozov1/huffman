@@ -1,6 +1,6 @@
-#Huffman coding
+# Huffman coding
 
-####This algorithm archives the input files
+#### This algorithm archives the input files
 
 Archive the input file to ```result``` folder
 ```angular2html
