@@ -1,11 +1,13 @@
+import os
+
 from huffman_tree import Tree
 from functions import read_bytes
 
 
-START_FILE = 'q.jpg'
+START_FILE = 'example_pictures/q.jpg'
 
 
-def count_letters():
+def count_bytes():
     global num
     num = {}
 
@@ -15,10 +17,6 @@ def count_letters():
         else:
             num[byte] = 1
 
-    f.close()
-
-    print(num)
-
 
 def make_tree():
     global codes, tree
@@ -26,7 +24,7 @@ def make_tree():
     trees = []  # Нужно заменить на сет!!!
 
     for byte, summ in sorted(num.items()):
-        trees.append(Tree(summ=summ, letter=byte))
+        trees.append(Tree(summ=summ, byte=byte))
 
     trees.sort(key=lambda tree: tree.sum)
     print(trees)
@@ -44,8 +42,8 @@ def make_tree():
 
 
 def write_tree():
-    tree_file = open('tree.txt', 'w')
-    bytes_file = open('tree_bytes.txt', 'wb')
+    tree_file = open('result/tree.txt', 'w')
+    bytes_file = open('result/tree_bytes.txt', 'wb')
 
     tree_str, tree_bytes = tree.get_string()
 
@@ -71,11 +69,11 @@ def write_bits():
     print('all code: ', bitstring)
     print('len =', len(bitstring))
 
-    len_file = open('len.txt', 'w')
+    len_file = open('result/len.txt', 'w')
     len_file.write(str(len(bitstring)))
     len_file.close()
 
-    res = open('res.txt', 'wb')
+    res = open('result/res.txt', 'wb')
 
     n = int(bitstring, 2)
     bytess = n.to_bytes((n.bit_length() + 7) // 8, 'big')
@@ -87,14 +85,10 @@ def write_bits():
 
 
 if __name__ == '__main__':
-    # Clear file
-    f = open('res.txt', 'w')
-    f.close()
+    if not os.path.exists('result'):
+        os.mkdir('result')
 
-    count_letters()
+    count_bytes()
     make_tree()
     write_tree()
     write_bits()
-
-
-
