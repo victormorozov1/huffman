@@ -37,9 +37,11 @@ class Tree:
 
     def get_string(self):
         if self.letter:
-            return self.letter
+            return 'b', self.letter
 
-        return '-' + self.left.get_string() + self.right.get_string()
+        l, r = self.left.get_string(), self.right.get_string()
+
+        return f'-{l[0]}{r[0]}', l[1] + r[1]
 
     def __str__(self):
         return f'Tree: sum={self.sum}, letter={self.letter}'

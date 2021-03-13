@@ -5,15 +5,18 @@ from separator import SEPARATOR
 def count_letters():
     global num
 
-    f = open('text.txt')
-    num = [0] * 30000
+    f = open('text.txt', 'rb')
+    num = {}
 
     while True:
-        c = f.read(1)
-        if c:
-            num[ord(c)] += 1
-        else:
+        byte = f.read(1)
+        if byte == b'':  # Возможно не всегда нужно здесь выходить!!!
             break
+        print('byte =', byte, type(byte))
+        if byte in num:
+            num[byte] += 1
+        else:
+            num[byte] = 1
 
     f.close()
 
@@ -25,9 +28,8 @@ def make_tree():
     codes = {}
     trees = []  # Нужно заменить на сет!!!
 
-    for i in range(len(num)):
-        if num[i]:
-            trees.append(Tree(summ=num[i], letter=chr(i)))
+    for byte, summ in sorted(num.items()):
+        trees.append(Tree(summ=summ, letter=byte))
 
     trees.sort(key=lambda tree: tree.sum)
     print(trees)
@@ -38,22 +40,27 @@ def make_tree():
         trees.sort(key=lambda tree: tree.sum)
 
     tree = trees[0]
-    print(tree)
+    print('Tree: ', tree)
 
     tree.count_codes('', codes)
-    print(codes)
+    print('Codes: ', codes)
 
 
-def write_tree(filename='res.txt', separator=SEPARATOR):
-    res = open(filename, 'w')
+def write_tree():
+    tree_file = open('tree.txt', 'w')
+    bytes_file = open('tree_bytes.txt', 'wb')
 
-    res.write(tree.get_string() + separator)
+    tree_str, tree_bytes = tree.get_string()
 
-    res.close()
+    tree_file.write(tree_str)
+    bytes_file.write(tree_bytes)
+
+    tree_file.close()
+    bytes_file.close()
 
 
 def write_bits():
-    f = open('text.txt', 'r')
+    f = open('text.txt', 'rb')
 
     bitstring = ''
 
@@ -67,9 +74,9 @@ def write_bits():
     print('all code: ', bitstring)
     print('len =', len(bitstring))
 
-    res = open('tree.txt', 'a')
-    res.write(f'{SEPARATOR}{len(bitstring)}')
-    res.close()
+    len_file = open('len.txt', 'w')
+    len_file.write(str(len(bitstring)))
+    len_file.close()
 
     res = open('res.txt', 'wb')
 
@@ -89,7 +96,7 @@ if __name__ == '__main__':
 
     count_letters()
     make_tree()
-    write_tree(filename='tree.txt', separator='')
+    write_tree()
     write_bits()
 
 
