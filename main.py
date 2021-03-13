@@ -1,18 +1,16 @@
 from huffman_tree import Tree
 from separator import SEPARATOR
+from functions import read_bytes
+
+
+START_FILE = 'q.jpg'
 
 
 def count_letters():
     global num
-
-    f = open('text.txt', 'rb')
     num = {}
 
-    while True:
-        byte = f.read(1)
-        if byte == b'':  # Возможно не всегда нужно здесь выходить!!!
-            break
-        print('byte =', byte, type(byte))
+    for byte in read_bytes(START_FILE):
         if byte in num:
             num[byte] += 1
         else:
@@ -60,7 +58,7 @@ def write_tree():
 
 
 def write_bits():
-    f = open('text.txt', 'rb')
+    f = open(START_FILE, 'rb')
 
     bitstring = ''
 

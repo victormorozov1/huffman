@@ -1,23 +1,28 @@
 from separator import SEPARATOR
 from huffman_tree import *
+from functions import read_bytes
 
 
 # f = open('res.txt', 'rb')
 # c = f.read()
 
-tree = open('tree.txt')
-tree, ln = tree.read().split(SEPARATOR)
+END_FILE = 'res.jpeg'
 
-bits = open('res.txt', 'rb')
 
-c = bits.read()
-ln = int(ln)
+tree_list = list(open('tree.txt', 'r').read())
+print(tree_list)
+for byte in read_bytes('tree_bytes.txt'):
+    print(byte)
+    tree_list[tree_list.index('b')] = byte
+print('Tree list =', tree_list)
 
-print(ln, tree, c)
+ln = int(open('len.txt', 'r').read())
 
-print(c)
+bits = open('res.txt', 'rb').read()
 
-binary_string = "{:08b}".format(int(c.hex(), 16))
+print(ln, tree_list, bits)
+
+binary_string = "{:08b}".format(int(bits.hex(), 16))
 
 if len(binary_string) > ln:
     binary_string = binary_string[len(binary_string) - ln::]
@@ -28,10 +33,13 @@ print(binary_string)
 print('len =', len(binary_string))
 
 
-tree = tree_from_str(list(tree))
+tree = tree_from_str(list(tree_list))
 print(tree.get_string())
+
+result = open(END_FILE, 'wb')
 
 print('RESULT TEXT:')
 while binary_string:
     letter, binary_string = tree.get_letter(binary_string)
     print(letter, end='')
+    result.write(letter)
