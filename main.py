@@ -1,5 +1,4 @@
 from huffman_tree import Tree
-from separator import SEPARATOR
 from functions import read_bytes
 
 

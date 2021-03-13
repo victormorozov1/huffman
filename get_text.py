@@ -1,4 +1,3 @@
-from separator import SEPARATOR
 from huffman_tree import *
 from functions import read_bytes
 
